@@ -47,27 +47,27 @@
 				<input type="hidden" name="bno" value="${board.bno}"/>
 			</form>
 			<%-- 스크립트 --%>
-			<script>
-				$(function(){
-					var form = $("#myform");
-					
-					$("button").click(function(e){
-						e.preventDefault();						
-						
-						var oper = $(this).data("oper");
-						console.log(oper);
-						
-						if(oper=='remove'){
-							form.attr("action","remove");
-						}else if(oper=='modify') {
-							form =("form[role='form']");
-						}else if(oper=='list') {
-							form.attr("action","list")
-								.attr("method","get");
-							form.find("input[name='bno']").remove();
-						}
-						form.submit();
-					})
-				})
-			</script>
+<script>
+	$(function(){
+		var form = $("#myform");
+		
+		$("button").click(function(e){
+			e.preventDefault();						
+			
+			var oper = $(this).data("oper");
+			console.log(oper);
+			
+			if(oper=='remove'){
+				form.attr("action","remove");
+			}else if(oper=='modify') {
+				form = $("form[role='form']");
+			}else if(oper=='list') {
+				form.attr("action","list")
+					.attr("method","get");
+				form.find("input[name='bno']").remove();
+			}
+			form.submit();
+		})
+	})
+</script>
 <%@include file="../includes/footer.jsp" %>       

@@ -147,20 +147,21 @@ public class RegisterController {
 	
 	//회원정보 수정 - 현 비밀번호 입력 후 새 비밀번호 입력 및 확인
 	@PostMapping("/changePwd")
-	public String changePost(ChangeVO change, @SessionAttribute AuthVO auth,HttpSession session, RedirectAttributes rttr) {
+	public String changePost(ChangeVO change, HttpSession session, RedirectAttributes rttr) {
 		//change(password,new_password,cofirm_password)
 		log.info("회원정보 수정" + change);
 		//userid를 세션에서 가져와서 change에 담기
-//		AuthVO auth = (AuthVO) session.getAttribute("auth"); //= @SessionAttribute AuthVO auth
+		AuthVO auth = (AuthVO) session.getAttribute("auth"); //= @SessionAttribute AuthVO auth
 		change.setUserid(auth.getUserid());
 		
 		if(service.updateMember(change)) {
 			//성공시 세션 해제 후 로그인 페이지로 이동
+			log.info("회원정보 수정 완료");
 			session.removeAttribute("auth");
 			return "redirect:signin";
 		} else {
 			rttr.addFlashAttribute("error", "비밀번호를 확인해주세요.");
-			return "redirect:/";
+			return "redirect:/member/changePwd";
 		}
 	}
 }
