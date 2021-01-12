@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- mybatis mapper가 있는데 나 그거 없음... -->
+<mapper namespace="com.company.mapper.PersonMapper">
+	<insert id="insert">
+		insert into person(id,name) values(#{id},#{name})
+	</insert>
+	<update id="update">
+		update person set name=#{name} where id=#{id}
+	</update> 
+	<delete id="delete">
+		delete from person where id=#{id}
+	</delete>
+	
+	<!-- resultType이 필수로 들어옴 -->
+	<select id="getPerson" resultType="java.lang.String">
+		select name from person where id=#{id}
+	</select>
+	<select id="selectAll" resultType="com.company.domain.PersonVO">
+		select id,name from person
+	</select>
+	<!-- id명에 노란줄 뜨면 mapper.java에 변수명이 적혔는지 확인 
+		sql문 적을 때 세미콜론(;) 절대 찍으면 안됨-->
+</mapper>
+<!-- 꼭 mapper 사이에 넣기 실수 많음
+	mapper 패키지 명과 파일명 똑같이 맞추기 (dao를 쓰면 안 맞춰도 됨)-->

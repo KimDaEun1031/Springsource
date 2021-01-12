@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- mybatis mapper가 있는데 나 그거 없음... -->
+<mapper namespace="com.company.mapper.BoardMapper">
+	<!-- 게시글 등록 -->
+	<insert id="insert">
+		insert into spring_board(bno,title,content,writer) 
+		values(seq_board.nextval,#{title},#{content},#{writer})
+	</insert>
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		delete from spring_board where bno=#{bno}
+	</delete>
+	<!-- 게시글 수정 : title, content, updatedate-->
+	<update id="update">
+		update spring_board set title=#{title}, content=#{content}, updatedate=sysdate 
+		where bno=#{bno}
+	</update>
+	
+	<!-- 전체 조회 -->
+	<select id="list" resultType="com.company.domain.BoardVO">
+		select * from spring_board where bno>0 order by bno desc
+		<!-- bno>0 order by bno desc 넣는 편이 효율이 좋음 -->
+	</select>
+	<!-- 특정 번호 조회 -->
+	<select id="read" resultType="com.company.domain.BoardVO">
+		select * from spring_board 
+		where bno=#{bno}
+	</select>
+	
+</mapper>

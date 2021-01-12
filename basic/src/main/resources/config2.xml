@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="student" class="com.company.student.Student">
+		<!-- student의 필드의 값을 설정(이름도 설정가능) -->
+		<constructor-arg value="김다은"></constructor-arg>
+		<constructor-arg value="23"></constructor-arg>
+		<constructor-arg value="4"></constructor-arg>
+		<constructor-arg value="3"></constructor-arg>
+	</bean>
+	<bean id="info" class="com.company.student.StudentInfo">
+		<constructor-arg ref="student"></constructor-arg>
+	</bean>
+</beans>

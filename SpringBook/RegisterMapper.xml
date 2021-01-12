@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- mybatis mapper가 있는데 나 그거 없음... -->
+<mapper namespace="com.company.mapper.RegisterMapper">
+	<!-- 중복아이디 검사 -->
+	<select id="selectById" resultType="com.company.domain.RegisterVO">
+		select * from member where userid=#{userid}
+	</select>
+	<!-- 회원가입 -->
+	<insert id="insert">
+		insert into member(userid,password,name,gender,email) values(#{userid},#{password},#{name},#{gender},#{email})
+	</insert>
+	<!-- 로그인 AuthVO(넘어올 데이터)isLogin(LoginVO login)(넘어갈 데이터)-->
+	<select id="isLogin" resultType="com.company.domain.AuthVO">
+		select userid,name from member where userid=#{userid} and password=#{password}
+	</select>
+	<!-- 회원탈퇴 -->
+	<delete id="leaveMember">
+		delete from member where userid=#{userid} and password=#{password}
+	</delete>
+	<!-- 회원정보 수정 -->
+	<update id="updateMember">
+		update member set password=#{new_password} where userid=#{userid} and password=#{password}
+	</update>
+
+</mapper>
