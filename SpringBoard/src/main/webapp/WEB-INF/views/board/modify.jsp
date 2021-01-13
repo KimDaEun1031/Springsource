@@ -47,27 +47,11 @@
 				<input type="hidden" name="bno" value="${board.bno}"/>
 			</form>
 			<%-- 스크립트 --%>
-<script>
-	$(function(){
-		var form = $("#myform");
-		
-		$("button").click(function(e){
-			e.preventDefault();						
-			
-			var oper = $(this).data("oper");
-			console.log(oper);
-			
-			if(oper=='remove'){
-				form.attr("action","remove");
-			}else if(oper=='modify') {
-				form = $("form[role='form']");
-			}else if(oper=='list') {
-				form.attr("action","list")
-					.attr("method","get");
-				form.find("input[name='bno']").remove();
-			}
-			form.submit();
-		})
-	})
-</script>
+			<!-- 페이지 나누기를 위한 세팅값 -->
+<form action="" id="myform" method="post">
+	<input type="hidden" name="bno" value="${board.bno}" />
+	<input type="hidden" name="pageNum" value="${cri.pageNum}" />
+	<input type="hidden" name="amount" value="${cri.amount}" />	
+</form>
+<script src="/resources/js/modify.js"></script>
 <%@include file="../includes/footer.jsp" %>       
