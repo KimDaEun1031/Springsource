@@ -31,21 +31,44 @@
 			select * 
 			from(select /*+INDEX_DESC(spring_board pk_spring_board) */ 
 				 rownum rn, bno,title, writer, regdate, updatedate 
-				 from spring_board 
-				 where rownum <= (#{pageNum}*#{amount}))
+				 from spring_board where 
+		]]>		
+			<include refid="criteria"></include> <!-- 동적 sql 삽입 -->
+		<![CDATA[		 
+				 rownum <= (#{pageNum}*#{amount}))
 			where rn > (#{pageNum}-1)*#{amount}
 		]]>
 		<!-- CDATA => 꺽쇠가 크기 비교를 위한 것이라는 것을 알리기 위함 -->
 	</select>
 	<!-- 전체 게시물 수 -->
 	<select id="totalCnt" resultType="int">
-		select count(*) from spring_board where bno>0
+		select count(*) from spring_board where 
+		<include refid="criteria"></include>
+		bno>0
 	</select>
 	<!-- 특정 번호 조회 -->
 	<select id="read" resultType="com.company.domain.BoardVO">
 		select * from spring_board 
 		where bno=#{bno}
 	</select>
-	
-	
+	<!-- 동적 sql -->
+	<sql id="criteria">
+		<trim prefix="(" suffix=") AND" prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type=='T'.toString()">
+							title like '%'||#{keyword}||'%'
+						</when>
+						<when test="type=='C'.toString()">
+							content like '%'||#{keyword}||'%'
+						</when>
+						<when test="type=='W'.toString()">
+							writer like '%'||#{keyword}||'%'
+						</when>
+					</choose>
+				</trim>				
+			</foreach>		
+		</trim>
+	</sql>	
 </mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- mybatis mapper가 있는데 나 그거 없음... -->
+<mapper namespace="com.company.mapper.BlogMapper">
+	<!-- 회원가입 - register -->
+	<insert id="insertRegister">
+		insert into register(nickname,password) values(#{nickName},#{password})
+	</insert>
+	
+	<delete id="deleteRegister">
+		delete from register where nickname=#{nickName} and password=#{password}
+	</delete>
+	
+	<update id="updateNickname">
+		update register set nickname=#{new_nickName} where nickname=#{nickName} and password=#{password}
+	</update>
+	
+	<update id="updatePassword">
+		update register set password=#{new_password} where nickname=#{nickName} and password=#{password}
+	</update>
+	
+	<!-- 게시판 - blog_board -->
+	
+	
+	<!-- 댓글 -->
+</mapper>

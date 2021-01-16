@@ -42,3 +42,41 @@ insert into spring_board(bno,title,content,writer)
 (select seq_board.nextval,title,content,writer from spring_board);
 
 select count(*) from spring_board;
+
+-- 검색
+select *
+from(select /*+INDEX_DESC(spring_board pk_spring_board) */ rownum rn, bno, title, writer, regdate, updatedate
+	from spring_board
+	where title like '%더미%' and rownum<=10)
+where rn>0;
+
+-- 제목 || 내용
+select *
+from(select /*+INDEX_DESC(spring_board pk_spring_board) */ rownum rn, bno, title, writer, regdate, updatedate
+	from spring_board
+	where (title like '%더미%' or content like '%더미%') and rownum<=10)
+where rn>0;
+
+-- 제목 || 내용 || 작성자
+select *
+from(select /*+INDEX_DESC(spring_board pk_spring_board) */ rownum rn, bno, title, writer, regdate, updatedate
+	from spring_board
+	where (title like '%더미%' or content like '%더미%' or writer like '%더미%') and rownum<=10)
+where rn>0;
+
+-- 댓글
+create table spring_reply(
+	rno number(10,0) constraint pk_reply primary key, --댓글 글번호
+	bno number(10,0) not null, --원본글 글번호
+	reply varchar2(1000) not null, --댓글
+	replyer varchar2(50) not null, --댓글 작성자
+	replyDate date default sysdate, --댓글작성일
+	updateDate date default sysdate, --댓글 수젖일
+	constraint fk_reply_board foreign key(bno) references spring_board(bno) --외래키 설정
+);
+
+create sequence seq_reply;
+-- 인덱스 생성
+create index idx_reply on spring_reply(bno desc,rno asc);
+
+select * from SPRING_REPLY;

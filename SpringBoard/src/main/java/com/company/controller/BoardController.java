@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -51,16 +52,15 @@ public class BoardController {
 		//전체 목록 요청
 		List<BoardVO> list = service.getList(cri);
 		//전체 게시물 수 요청
-		int total = service.getTotal();
+		int total = service.getTotal(cri);
 		model.addAttribute("list", list);
 		model.addAttribute("pageVO", new PageVO(cri, total));
 	}
 	
 	//특정 게시물 보기
 	@GetMapping({"/read","/modify"})
-	public void get(int bno, Model model,Criteria cri) {
+	public void get(int bno, Model model, @ModelAttribute("cri")Criteria cri) {
 		log.info("특정 게시물 보기..." + bno); //단일 조회
-		log.info("Criteria"+cri);
 		BoardVO board = service.getRow(bno);
 		model.addAttribute("board", board);
 		
@@ -74,6 +74,8 @@ public class BoardController {
 		service.remove(bno);
 		
 		rttr.addFlashAttribute("result", "success");
+		rttr.addFlashAttribute("type", cri.getType());
+		rttr.addFlashAttribute("keyword", cri.getKeyword());
 		rttr.addFlashAttribute("pageNum", cri.getPageNum());
 		rttr.addFlashAttribute("amount", cri.getAmount());
 		
@@ -87,6 +89,8 @@ public class BoardController {
 		service.modify(board);
 		
 		rttr.addFlashAttribute("result", "success");
+		rttr.addFlashAttribute("type", cri.getType());
+		rttr.addFlashAttribute("keyword", cri.getKeyword());
 		rttr.addFlashAttribute("pageNum", cri.getPageNum());
 		rttr.addFlashAttribute("amount", cri.getAmount());
 		

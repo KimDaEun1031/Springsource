@@ -48,15 +48,17 @@
                             	  	<form action="" id="searchForm">
                             	  		<select name="type" id="">
 	                            			<option value="">-----</option>
-	                            			<option value="T">제목</option>
-	                            			<option value="C">내용</option>
-	                            			<option value="W">작성자</option>
-	                            			<option value="TC">제목 or 내용</option>
-	                            			<option value="TW">제목 or 작성자</option>
-	                            			<option value="TCW">제목 or 내용 or 작성자</option>
+	                            			<option value="T" <c:out value="${pageVO.cri.type=='T'?'selected':''}"/>>제목</option>
+	                            			<option value="C" <c:out value="${pageVO.cri.type=='C'?'selected':''}"/>>내용</option>
+	                            			<option value="W" <c:out value="${pageVO.cri.type=='W'?'selected':''}"/>>작성자</option>
+	                            			<option value="TC" <c:out value="${pageVO.cri.type=='TC'?'selected':''}"/>>제목 or 내용</option>
+	                            			<option value="TW" <c:out value="${pageVO.cri.type=='TW'?'selected':''}"/>>제목 or 작성자</option>
+	                            			<option value="TCW" <c:out value="${pageVO.cri.type=='TCW'?'selected':''}"/>>제목 or 내용 or 작성자</option>
 	                            		</select>
-	                            		<input type="text" name="keyword" />
-	                            		<button type="button">검색</button>
+	                            		<input type="text" name="keyword" value="${pageVO.cri.keyword}" />
+	                            		<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum}" />
+	                            		<input type="hidden" name="amount" value="${pageVO.cri.amount}" />
+	                            		<button type="button" class="btn btn-default">검색</button>
                             	  	</form>                           		
                             	   </div>
                             	   <div class="col-md-2 col-md-offset-2">
@@ -94,8 +96,10 @@
             <!-- /.row -->
 <%-- 페이지 링크 값을 넘기기위한 폼 --%>
 <form action="" id="actionForm">
+	<input type="hidden" name="type" value="${pageVO.cri.type}" />
+	<input type="hidden" name="keyword" value="${pageVO.cri.keyword}" />
 	<input type="hidden" name="pageNum" value="${pageVO.cri.pageNum}" />
-	<input type="hidden" name="amount" value="${pageVO.cri.amount}" />
+	<input type="hidden" name="amount" value="${pageVO.cri.amount}" />	
 </form>
             
 <!-- 모달 추가 -->

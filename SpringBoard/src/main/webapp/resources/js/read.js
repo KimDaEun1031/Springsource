@@ -3,6 +3,7 @@
  */
 $(function(){
 		var form =$("#myform");
+		
 		$(".btn-default").click(function(){
 			form.submit();
 		})

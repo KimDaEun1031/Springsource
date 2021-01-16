@@ -49,6 +49,8 @@
 			<%-- 스크립트 --%>
 			<!-- 페이지 나누기를 위한 세팅값 -->
 <form action="" id="myform" method="post">
+	<input type="hidden" name="type" value="${cri.type}" />
+	<input type="hidden" name="keyword" value="${cri.keyword}" />
 	<input type="hidden" name="bno" value="${board.bno}" />
 	<input type="hidden" name="pageNum" value="${cri.pageNum}" />
 	<input type="hidden" name="amount" value="${cri.amount}" />	
